@@ -1,6 +1,8 @@
 # One step in a pipeline
 class Step < ActiveRecord::Base
   belongs_to :pipeline
+  default_scope { order(order: :asc) }
+
   store :options, accessors: [:field], coder: JSON
 
   def self.all_stored_options

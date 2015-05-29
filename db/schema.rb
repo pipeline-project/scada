@@ -24,6 +24,7 @@ ActiveRecord::Schema.define(version: 20150529175312) do
   create_table "steps", force: :cascade do |t|
     t.string   "name"
     t.string   "type"
+    t.integer  "order"
     t.text     "options"
     t.integer  "pipeline_id"
     t.datetime "created_at",  null: false

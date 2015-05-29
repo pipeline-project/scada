@@ -2,7 +2,7 @@
   <h3><%= f.object.name %> <small>(<%= f.object.type %>)</small></h3>
   <%= f.text_field :name %>
   <%= f.select :type, Step.subclasses.map { |x| [t(x), x] } %>
-
+  <%= f.text_field :order %>
   <h4>Options</h4>
   <div class="options">
     <% f.object.class.stored_attributes[:options].each do |o| %>
