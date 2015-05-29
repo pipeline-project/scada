@@ -15,6 +15,10 @@
   <%= f.text_area :description %>
 
   <h2>Steps</h2>
+  <script type="text/javascript">
+    var step_type_options = <%= Hash[Step.subclasses.map { |x| [x, x.stored_attributes[:options]] }].to_json.html_safe %>;
+  </script>
+
   <ol>
     <%= f.fields_for :steps %>
   </ol>
