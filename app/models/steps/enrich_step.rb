@@ -1,8 +1,9 @@
 module Steps
   class EnrichStep < Step
     def perform_one(record, params)
-      if params[:fields]
-        fields(params[:fields]).each do |field|
+      fields = fields(params[:fields])
+      if fields
+        fields.each do |field|
           enrich_field record, field
         end
 
@@ -31,7 +32,8 @@ module Steps
     end
 
     def fields(fields)
-      fields || options[:fields]
+      v = fields || options[:fields]
+      Array.wrap(v) if v
     end
   end
 end

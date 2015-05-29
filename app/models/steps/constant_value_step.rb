@@ -11,7 +11,13 @@ module Steps
     private
 
     def value
-      options[:value]
+      v = options[:value]
+      case v
+      when Proc
+        v.call
+      else
+        v
+      end
     end
   end
 end

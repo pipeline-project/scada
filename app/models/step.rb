@@ -14,6 +14,7 @@ class Step
   ##
   # Execute the step on a given set of records
   def perform(record_or_enumerable, params = {}, &block)
+    logger.debug "#{self}(#{params.inspect}) <- #{record_or_enumerable}"
     return to_enum(:perform, record_or_enumerable, params) unless block_given?
 
     case record_or_enumerable
@@ -32,7 +33,7 @@ class Step
   def handle_result(record, result)
     return to_enum(:handle_result, record, result) unless block_given?
 
-    if result.is_a? Enumerable
+    if result.is_a?(Enumerable) && !result.is_a?(Hash)
       result.each { |r| yield wrap(record, r) }
     else
       yield wrap(record, result)
@@ -48,6 +49,11 @@ class Step
       end
     else
       result
-    end
+    end.tap { |r| logger.debug "#{self} #{record} => #{r.inspect}" }
   end
+
+  def logger
+    @logger ||= Logger.new('/dev/null')
+  end
+
 end

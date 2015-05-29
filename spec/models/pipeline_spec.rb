@@ -16,4 +16,24 @@ describe Pipeline do
     expect(actual).to include File.join(Rails.root, 'Gemfile')
     expect(actual).to include File.join(Rails.root, 'Rakefile')
   end
+
+  it 'should be able to do something useful' do
+    subject.steps << Steps::GsubStep.new(subject, pattern: '^(.+)$', replacement: 'http://purl.stanford.edu/\1.xml')
+    subject.steps << Steps::HttpRequestStep.new(subject)
+    subject.steps << Steps::ItemLevelStep.new(subject, level: 'body')
+    subject.steps << Steps::ItemLevelXpathStep.new(subject, xpath: '//identityMetadata')
+    subject.steps << Steps::XpathStep.new(subject, xpath: {
+      id: '//objectId/text()',
+      sourceId: '//sourceId/text()',
+      label: '//objectLabel/text()',
+    })
+    subject.steps << Steps::GsubStep.new(subject, pattern: 'druid:', replacement: '', fields: 'id')
+    subject.steps << Steps::ConstantValueStep.new(subject, value: ->() { Time.now }, fields: 'pipelined_at')
+    # subject.steps << Steps::HttpPostRequestStep.new(subject, url: 'http://localhost:8983/solr/update')
+
+    actual = subject.perform(['xf680rd3068']).first
+    expect(actual).to include 'id' => ['xf680rd3068'], 'sourceId' => ['MISC_1855'], 'label' => ['Latin glossary : small manuscript fragment on vellum.']
+    expect(actual).to include 'pipelined_at'
+
+  end
 end

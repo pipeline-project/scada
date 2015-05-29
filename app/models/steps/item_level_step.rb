@@ -1,7 +1,12 @@
 module Steps
   class ItemLevelStep < Step
     def perform_one(record, params)
-      record[level(params[:level])]
+      l = level(params[:level])
+      if record.respond_to? l
+        record.public_send(l)
+      elsif record.respond_to? :[]
+        record[l]
+      end
     end
 
     private
