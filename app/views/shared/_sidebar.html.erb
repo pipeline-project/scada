@@ -1,2 +1,10 @@
 <section class="sidebar">
+  <ul class="sidebar-menu">
+    <li class="<%= 'active' if controller_name == "pipelines" %>">
+      <%= link_to pipelines_url do %>
+        <i class="fa fa-retweet"></i>
+        <span>Pipelines</span>
+      <% end %>
+    </li>
+  </ul>
 </section>

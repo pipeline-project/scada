@@ -1,6 +1,7 @@
 # A single pipeline
 class Pipeline < ActiveRecord::Base
   has_many :steps
+  accepts_nested_attributes_for :steps
 
   def ordered_steps
     @ordered_steps ||= []

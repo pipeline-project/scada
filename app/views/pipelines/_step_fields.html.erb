@@ -1,0 +1,10 @@
+<li class="step">
+  <h3><%= f.object.name %> <small>(<%= f.object.type %>)</small></h3>
+  <%= f.text_field :name %>
+  <%= f.select :type, Step.subclasses.map { |x| [x, x] } %>
+
+  <h4>Options</h4>
+  <% f.object.class.stored_attributes[:options].each do |o| %>
+    <%= f.text_field o, layout: :horizontal %>
+  <% end %>
+</li>

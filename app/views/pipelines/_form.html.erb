@@ -1,4 +1,4 @@
-<%= form_for(@pipeline) do |f| %>
+<%= bootstrap_nested_form_for(@pipeline) do |f| %>
   <% if @pipeline.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@pipeline.errors.count, "error") %> prohibited this pipeline from being saved:</h2>
@@ -11,19 +11,16 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= f.label :name %><br>
-    <%= f.text_field :name %>
-  </div>
-  <div class="field">
-    <%= f.label :description %><br>
-    <%= f.text_area :description %>
-  </div>
-  <div class="field">
-    <%= f.label :steps %><br>
-    <%= f.text_area :steps %>
-  </div>
+  <%= f.text_field :name %>
+  <%= f.text_area :description %>
+
+  <h2>Steps</h2>
+  <ol>
+    <%= f.fields_for :steps %>
+  </ol>
+  <%= f.link_to_add "Add a step", :steps %>
+
   <div class="actions">
-    <%= f.submit %>
+    <%= f.primary %>
   </div>
 <% end %>

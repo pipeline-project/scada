@@ -14,5 +14,6 @@
 //= require jquery_ujs
 //= require bootstrap
 //= require AdminLTE.min
+//= require jquery_nested_form
 //= require angular
 //= require_tree .

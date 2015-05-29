@@ -3,6 +3,10 @@ class Step < ActiveRecord::Base
   belongs_to :pipeline
   store :options, accessors: [:field], coder: JSON
 
+  def self.all_stored_options
+    Step.subclasses.map { |x| x.stored_attributes[:options] }.flatten.uniq
+  end
+
   ##
   # Execute the step on a given set of records
   def perform(record_or_enumerable, params = {}, &block)
