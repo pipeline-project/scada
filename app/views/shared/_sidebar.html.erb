@@ -1,0 +1,2 @@
+<section class="sidebar">
+</section>
