@@ -1,11 +1,15 @@
 module Steps
   class EnrichStep < Step
     def perform_one(record, params)
-      fields(params[:fields]).each do |field|
-        enrich_field record, field
-      end
+      if params[:fields]
+        fields(params[:fields]).each do |field|
+          enrich_field record, field
+        end
 
-      record
+        record
+      else
+        enrich_value(record, nil, record)
+      end
     end
 
     private

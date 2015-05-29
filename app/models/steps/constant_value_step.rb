@@ -4,6 +4,10 @@ module Steps
       record[field] = value
     end
 
+    def enrich_value(_record, _field, _value)
+      value
+    end
+
     private
 
     def value
