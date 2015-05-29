@@ -19,10 +19,11 @@
     var step_type_options = <%= Hash[Step.subclasses.map { |x| [x, x.stored_attributes[:options]] }].to_json.html_safe %>;
   </script>
 
-  <ol>
-    <%= f.fields_for :steps %>
+  <ol id="steps" class="row">
+    <%= f.fields_for :steps, wrapper: false %>
   </ol>
-  <%= f.link_to_add "Add a step", :steps %>
+
+  <%= f.link_to_add "Add a step", :steps, data: { target: '#steps' } %>
 
   <div class="actions">
     <%= f.primary %>

@@ -1,4 +1,4 @@
-<li class="step">
+<li class="step col-md-12">
   <h3><%= f.object.name %> <small>(<%= f.object.type %>)</small></h3>
   <%= f.text_field :name %>
   <%= f.select :type, Step.subclasses.map { |x| [t(x), x] } %>
