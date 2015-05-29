@@ -1,9 +1,11 @@
 module Steps
   class HttpRequestStep < Step
+    store_accessor :options, :url
+
     def perform_one(record, params)
       return to_enum(:perform_one, record, params) unless block_given?
 
-      uris = [record]
+      uris = [url || record]
       loop do
         uri = uris.pop
 

@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  resources :steps
+  resources :steps
+  resources :pipelines
   root 'welcome#index'
 
   # The priority is based upon order of creation: first created -> highest priority.

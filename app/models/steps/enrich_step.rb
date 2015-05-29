@@ -1,9 +1,12 @@
 module Steps
   class EnrichStep < Step
+    store_accessor :options, :fields
+
     def perform_one(record, params)
-      fields = fields(params[:fields])
-      if fields
-        fields.each do |field|
+      target_fields = params.fetch(:fields, fields)
+
+      if target_fields
+        Array.wrap(target_fields).each do |field|
           enrich_field record, field
         end
 
@@ -29,11 +32,6 @@ module Steps
 
     def enrich_value(_record, _field, value)
       value
-    end
-
-    def fields(fields)
-      v = fields || options[:fields]
-      Array.wrap(v) if v
     end
   end
 end

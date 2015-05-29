@@ -1,5 +1,7 @@
 module Steps
   class HttpRequestStep < Step
+    store_accessor :options, :url
+
     def perform_one(record, params)
       return to_enum(:perform_one, record, params) unless block_given?
 
@@ -12,10 +14,6 @@ module Steps
 
     def http_client
       @http_client ||= Hurley::Client.new url
-    end
-
-    def url
-      options[:url]
     end
   end
 end

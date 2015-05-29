@@ -1,5 +1,7 @@
 module Steps
   class ConstantValueStep < EnrichStep
+    store_accessor :options, :value
+
     def enrich_field(record, field)
       record[field] = value
     end
@@ -8,10 +10,8 @@ module Steps
       value
     end
 
-    private
-
     def value
-      v = options[:value]
+      v = super
       case v
       when Proc
         v.call

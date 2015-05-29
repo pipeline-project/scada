@@ -1,13 +1,9 @@
 module Steps
   class ItemLevelXpathStep < Step
+    store_accessor :options, :xpath
+
     def perform_one(record, params)
-      Nokogiri::XML(record).xpath(xpath(params[:xpath])).map(&:to_s)
-    end
-
-    private
-
-    def xpath(xpath)
-      xpath || options[:xpath]
+      Nokogiri::XML(record).xpath(params.fetch(:xpath, xpath)).map(&:to_s)
     end
   end
 end

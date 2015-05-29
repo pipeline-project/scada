@@ -1,15 +1,7 @@
 # One step in a pipeline
-class Step
-  attr_reader :pipeline, :options
-
-  ##
-  # Initialize a new step for a pipeline
-  # @param [Pipeline] pipeline
-  # @options [Hash] options
-  def initialize(pipeline, options = {})
-    @pipeline = pipeline
-    @options = options
-  end
+class Step < ActiveRecord::Base
+  belongs_to :pipeline
+  store :options, accessors: [:field], coder: JSON
 
   ##
   # Execute the step on a given set of records
@@ -30,6 +22,8 @@ class Step
     end
   end
 
+  private
+
   def handle_result(record, result)
     return to_enum(:handle_result, record, result) unless block_given?
 
@@ -41,15 +35,19 @@ class Step
   end
 
   def wrap(record, result)
-    if options[:field]
+    if field?
       if record.is_a? Hash
-        record[options[:field]] = result
+        record[field] = result
       else
-        { options[:field] => result }
+        { field => result }
       end
     else
       result
     end.tap { |r| logger.debug "#{self} #{record} => #{r.inspect}" }
+  end
+
+  def field?
+    field.present?
   end
 
   def logger

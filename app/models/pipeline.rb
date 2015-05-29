@@ -1,13 +1,15 @@
 # A single pipeline
-class Pipeline
-  def steps
-    @steps ||= []
+class Pipeline < ActiveRecord::Base
+  has_many :steps
+
+  def ordered_steps
+    @ordered_steps ||= []
   end
 
   def perform(seed)
     return to_enum(:perform, seed) unless block_given?
 
-    steps.inject(seed) do |memo, step|
+    ordered_steps.inject(seed) do |memo, step|
       step.perform(memo)
     end.each do |r|
       yield r

@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @step.name %>
+</p>
+
+<p>
+  <strong>Type:</strong>
+  <%= @step.type %>
+</p>
+
+<p>
+  <strong>Options:</strong>
+  <%= @step.options %>
+</p>
+
+<p>
+  <strong>Pipeline:</strong>
+  <%= @step.pipeline %>
+</p>
+
+<%= link_to 'Edit', edit_step_path(@step) %> |
+<%= link_to 'Back', steps_path %>

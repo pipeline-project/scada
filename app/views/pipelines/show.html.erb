@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @pipeline.name %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @pipeline.description %>
+</p>
+
+<p>
+  <strong>Steps:</strong>
+  <%= @pipeline.steps %>
+</p>
+
+<%= link_to 'Edit', edit_pipeline_path(@pipeline) %> |
+<%= link_to 'Back', pipelines_path %>
