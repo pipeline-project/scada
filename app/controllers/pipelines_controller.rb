@@ -62,13 +62,14 @@ class PipelinesController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_pipeline
-      @pipeline = Pipeline.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def pipeline_params
-      params.require(:pipeline).permit(:name, :description, steps_attributes: [:name, :type, *Step.all_stored_options])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_pipeline
+    @pipeline = Pipeline.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def pipeline_params
+    params.require(:pipeline).permit(:name, :description, steps_attributes: [:name, :type, *Step.all_stored_options])
+  end
 end

@@ -59,5 +59,4 @@ class Step < ActiveRecord::Base
   def logger
     @logger ||= Logger.new('/dev/null')
   end
-
 end

@@ -1,0 +1,8 @@
+coffee_script:
+  enabled: false
+
+ruby:
+  config_file: .rubocop.yml
+
+scss:
+  config_file: .scss-lint.yml

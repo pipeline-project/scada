@@ -23,10 +23,10 @@ describe Pipeline do
     subject.ordered_steps << Steps::ItemLevelStep.new(pipeline: subject, level: 'body')
     subject.ordered_steps << Steps::ItemLevelXpathStep.new(pipeline: subject, xpath: '//identityMetadata')
     subject.ordered_steps << Steps::XpathStep.new(pipeline: subject, xpath: {
-      id: '//objectId/text()',
-      sourceId: '//sourceId/text()',
-      label: '//objectLabel/text()',
-    })
+                                                    id: '//objectId/text()',
+                                                    sourceId: '//sourceId/text()',
+                                                    label: '//objectLabel/text()',
+                                                  })
     subject.ordered_steps << Steps::GsubStep.new(pipeline: subject, pattern: 'druid:', replacement: '', fields: 'id')
     subject.ordered_steps << Steps::ConstantValueStep.new(pipeline: subject, value: ->() { Time.now }, fields: 'pipelined_at')
     # subject.steps << Steps::HttpPostRequestStep.new(subject, url: 'http://localhost:8983/solr/update')
@@ -34,6 +34,5 @@ describe Pipeline do
     actual = subject.perform(['xf680rd3068']).first
     expect(actual).to include 'id' => ['xf680rd3068'], 'sourceId' => ['MISC_1855'], 'label' => ['Latin glossary : small manuscript fragment on vellum.']
     expect(actual).to include 'pipelined_at'
-
   end
 end

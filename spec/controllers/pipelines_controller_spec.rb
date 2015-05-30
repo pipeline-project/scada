@@ -19,17 +19,16 @@ require 'rails_helper'
 # that an instance is receiving a specific message.
 
 RSpec.describe PipelinesController, type: :controller do
-
   # This should return the minimal set of attributes required to create a valid
   # Pipeline. As you add validations to Pipeline, be sure to
   # adjust the attributes here as well.
-  let(:valid_attributes) {
+  let(:valid_attributes) do
     skip("Add a hash of attributes valid for your model")
-  }
+  end
 
-  let(:invalid_attributes) {
+  let(:invalid_attributes) do
     skip("Add a hash of attributes invalid for your model")
-  }
+  end
 
   # This should return the minimal set of values that should be in the session
   # in order to pass any filters (e.g. authentication) defined in
@@ -47,7 +46,7 @@ RSpec.describe PipelinesController, type: :controller do
   describe "GET #show" do
     it "assigns the requested pipeline as @pipeline" do
       pipeline = Pipeline.create! valid_attributes
-      get :show, {:id => pipeline.to_param}, valid_session
+      get :show, { id: pipeline.to_param }, valid_session
       expect(assigns(:pipeline)).to eq(pipeline)
     end
   end
@@ -62,7 +61,7 @@ RSpec.describe PipelinesController, type: :controller do
   describe "GET #edit" do
     it "assigns the requested pipeline as @pipeline" do
       pipeline = Pipeline.create! valid_attributes
-      get :edit, {:id => pipeline.to_param}, valid_session
+      get :edit, { id: pipeline.to_param }, valid_session
       expect(assigns(:pipeline)).to eq(pipeline)
     end
   end
@@ -70,31 +69,31 @@ RSpec.describe PipelinesController, type: :controller do
   describe "POST #create" do
     context "with valid params" do
       it "creates a new Pipeline" do
-        expect {
-          post :create, {:pipeline => valid_attributes}, valid_session
-        }.to change(Pipeline, :count).by(1)
+        expect do
+          post :create, { pipeline: valid_attributes }, valid_session
+        end.to change(Pipeline, :count).by(1)
       end
 
       it "assigns a newly created pipeline as @pipeline" do
-        post :create, {:pipeline => valid_attributes}, valid_session
+        post :create, { pipeline: valid_attributes }, valid_session
         expect(assigns(:pipeline)).to be_a(Pipeline)
         expect(assigns(:pipeline)).to be_persisted
       end
 
       it "redirects to the created pipeline" do
-        post :create, {:pipeline => valid_attributes}, valid_session
+        post :create, { pipeline: valid_attributes }, valid_session
         expect(response).to redirect_to(Pipeline.last)
       end
     end
 
     context "with invalid params" do
       it "assigns a newly created but unsaved pipeline as @pipeline" do
-        post :create, {:pipeline => invalid_attributes}, valid_session
+        post :create, { pipeline: invalid_attributes }, valid_session
         expect(assigns(:pipeline)).to be_a_new(Pipeline)
       end
 
       it "re-renders the 'new' template" do
-        post :create, {:pipeline => invalid_attributes}, valid_session
+        post :create, { pipeline: invalid_attributes }, valid_session
         expect(response).to render_template("new")
       end
     end
@@ -102,26 +101,26 @@ RSpec.describe PipelinesController, type: :controller do
 
   describe "PUT #update" do
     context "with valid params" do
-      let(:new_attributes) {
+      let(:new_attributes) do
         skip("Add a hash of attributes valid for your model")
-      }
+      end
 
       it "updates the requested pipeline" do
         pipeline = Pipeline.create! valid_attributes
-        put :update, {:id => pipeline.to_param, :pipeline => new_attributes}, valid_session
+        put :update, { id: pipeline.to_param, pipeline: new_attributes }, valid_session
         pipeline.reload
         skip("Add assertions for updated state")
       end
 
       it "assigns the requested pipeline as @pipeline" do
         pipeline = Pipeline.create! valid_attributes
-        put :update, {:id => pipeline.to_param, :pipeline => valid_attributes}, valid_session
+        put :update, { id: pipeline.to_param, pipeline: valid_attributes }, valid_session
         expect(assigns(:pipeline)).to eq(pipeline)
       end
 
       it "redirects to the pipeline" do
         pipeline = Pipeline.create! valid_attributes
-        put :update, {:id => pipeline.to_param, :pipeline => valid_attributes}, valid_session
+        put :update, { id: pipeline.to_param, pipeline: valid_attributes }, valid_session
         expect(response).to redirect_to(pipeline)
       end
     end
@@ -129,13 +128,13 @@ RSpec.describe PipelinesController, type: :controller do
     context "with invalid params" do
       it "assigns the pipeline as @pipeline" do
         pipeline = Pipeline.create! valid_attributes
-        put :update, {:id => pipeline.to_param, :pipeline => invalid_attributes}, valid_session
+        put :update, { id: pipeline.to_param, pipeline: invalid_attributes }, valid_session
         expect(assigns(:pipeline)).to eq(pipeline)
       end
 
       it "re-renders the 'edit' template" do
         pipeline = Pipeline.create! valid_attributes
-        put :update, {:id => pipeline.to_param, :pipeline => invalid_attributes}, valid_session
+        put :update, { id: pipeline.to_param, pipeline: invalid_attributes }, valid_session
         expect(response).to render_template("edit")
       end
     end
@@ -144,16 +143,15 @@ RSpec.describe PipelinesController, type: :controller do
   describe "DELETE #destroy" do
     it "destroys the requested pipeline" do
       pipeline = Pipeline.create! valid_attributes
-      expect {
-        delete :destroy, {:id => pipeline.to_param}, valid_session
-      }.to change(Pipeline, :count).by(-1)
+      expect do
+        delete :destroy, { id: pipeline.to_param }, valid_session
+      end.to change(Pipeline, :count).by(-1)
     end
 
     it "redirects to the pipelines list" do
       pipeline = Pipeline.create! valid_attributes
-      delete :destroy, {:id => pipeline.to_param}, valid_session
+      delete :destroy, { id: pipeline.to_param }, valid_session
       expect(response).to redirect_to(pipelines_url)
     end
   end
-
 end

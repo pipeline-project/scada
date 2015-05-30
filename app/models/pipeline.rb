@@ -6,9 +6,11 @@ class Pipeline < ActiveRecord::Base
   def perform(seed)
     return to_enum(:perform, seed) unless block_given?
 
-    steps.inject(seed) do |memo, step|
+    results = steps.inject(seed) do |memo, step|
       step.perform(memo)
-    end.each do |r|
+    end
+
+    results.each do |r|
       yield r
     end
   end

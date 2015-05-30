@@ -3,10 +3,10 @@ require 'rails_helper'
 RSpec.describe "steps/show", type: :view do
   before(:each) do
     @step = assign(:step, Step.create!(
-      :name => "Name",
-      :type => "Type",
-      :options => "MyText",
-      :pipeline => nil
+                            name: "Name",
+                            type: "Type",
+                            options: "MyText",
+                            pipeline: nil
     ))
   end
 

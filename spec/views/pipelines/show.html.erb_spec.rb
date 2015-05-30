@@ -3,9 +3,9 @@ require 'rails_helper'
 RSpec.describe "pipelines/show", type: :view do
   before(:each) do
     @pipeline = assign(:pipeline, Pipeline.create!(
-      :name => "Name",
-      :description => "MyText",
-      :steps => "MyText"
+                                    name: "Name",
+                                    description: "MyText",
+                                    steps: "MyText"
     ))
   end
 

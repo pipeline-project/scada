@@ -12,25 +12,23 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema.define(version: 20150529175312) do
-
   create_table "pipelines", force: :cascade do |t|
-    t.string   "name"
-    t.text     "description"
-    t.text     "steps"
+    t.string "name"
+    t.text "description"
+    t.text "steps"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
   end
 
   create_table "steps", force: :cascade do |t|
-    t.string   "name"
-    t.string   "type"
-    t.integer  "order"
-    t.text     "options"
-    t.integer  "pipeline_id"
+    t.string "name"
+    t.string "type"
+    t.integer "order"
+    t.text "options"
+    t.integer "pipeline_id"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
   end
 
   add_index "steps", ["pipeline_id"], name: "index_steps_on_pipeline_id"
-
 end

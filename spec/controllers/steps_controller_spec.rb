@@ -19,17 +19,16 @@ require 'rails_helper'
 # that an instance is receiving a specific message.
 
 RSpec.describe StepsController, type: :controller do
-
   # This should return the minimal set of attributes required to create a valid
   # Step. As you add validations to Step, be sure to
   # adjust the attributes here as well.
-  let(:valid_attributes) {
+  let(:valid_attributes) do
     skip("Add a hash of attributes valid for your model")
-  }
+  end
 
-  let(:invalid_attributes) {
+  let(:invalid_attributes) do
     skip("Add a hash of attributes invalid for your model")
-  }
+  end
 
   # This should return the minimal set of values that should be in the session
   # in order to pass any filters (e.g. authentication) defined in
@@ -47,7 +46,7 @@ RSpec.describe StepsController, type: :controller do
   describe "GET #show" do
     it "assigns the requested step as @step" do
       step = Step.create! valid_attributes
-      get :show, {:id => step.to_param}, valid_session
+      get :show, { id: step.to_param }, valid_session
       expect(assigns(:step)).to eq(step)
     end
   end
@@ -62,7 +61,7 @@ RSpec.describe StepsController, type: :controller do
   describe "GET #edit" do
     it "assigns the requested step as @step" do
       step = Step.create! valid_attributes
-      get :edit, {:id => step.to_param}, valid_session
+      get :edit, { id: step.to_param }, valid_session
       expect(assigns(:step)).to eq(step)
     end
   end
@@ -70,31 +69,31 @@ RSpec.describe StepsController, type: :controller do
   describe "POST #create" do
     context "with valid params" do
       it "creates a new Step" do
-        expect {
-          post :create, {:step => valid_attributes}, valid_session
-        }.to change(Step, :count).by(1)
+        expect do
+          post :create, { step: valid_attributes }, valid_session
+        end.to change(Step, :count).by(1)
       end
 
       it "assigns a newly created step as @step" do
-        post :create, {:step => valid_attributes}, valid_session
+        post :create, { step: valid_attributes }, valid_session
         expect(assigns(:step)).to be_a(Step)
         expect(assigns(:step)).to be_persisted
       end
 
       it "redirects to the created step" do
-        post :create, {:step => valid_attributes}, valid_session
+        post :create, { step: valid_attributes }, valid_session
         expect(response).to redirect_to(Step.last)
       end
     end
 
     context "with invalid params" do
       it "assigns a newly created but unsaved step as @step" do
-        post :create, {:step => invalid_attributes}, valid_session
+        post :create, { step: invalid_attributes }, valid_session
         expect(assigns(:step)).to be_a_new(Step)
       end
 
       it "re-renders the 'new' template" do
-        post :create, {:step => invalid_attributes}, valid_session
+        post :create, { step: invalid_attributes }, valid_session
         expect(response).to render_template("new")
       end
     end
@@ -102,26 +101,26 @@ RSpec.describe StepsController, type: :controller do
 
   describe "PUT #update" do
     context "with valid params" do
-      let(:new_attributes) {
+      let(:new_attributes) do
         skip("Add a hash of attributes valid for your model")
-      }
+      end
 
       it "updates the requested step" do
         step = Step.create! valid_attributes
-        put :update, {:id => step.to_param, :step => new_attributes}, valid_session
+        put :update, { id: step.to_param, step: new_attributes }, valid_session
         step.reload
         skip("Add assertions for updated state")
       end
 
       it "assigns the requested step as @step" do
         step = Step.create! valid_attributes
-        put :update, {:id => step.to_param, :step => valid_attributes}, valid_session
+        put :update, { id: step.to_param, step: valid_attributes }, valid_session
         expect(assigns(:step)).to eq(step)
       end
 
       it "redirects to the step" do
         step = Step.create! valid_attributes
-        put :update, {:id => step.to_param, :step => valid_attributes}, valid_session
+        put :update, { id: step.to_param, step: valid_attributes }, valid_session
         expect(response).to redirect_to(step)
       end
     end
@@ -129,13 +128,13 @@ RSpec.describe StepsController, type: :controller do
     context "with invalid params" do
       it "assigns the step as @step" do
         step = Step.create! valid_attributes
-        put :update, {:id => step.to_param, :step => invalid_attributes}, valid_session
+        put :update, { id: step.to_param, step: invalid_attributes }, valid_session
         expect(assigns(:step)).to eq(step)
       end
 
       it "re-renders the 'edit' template" do
         step = Step.create! valid_attributes
-        put :update, {:id => step.to_param, :step => invalid_attributes}, valid_session
+        put :update, { id: step.to_param, step: invalid_attributes }, valid_session
         expect(response).to render_template("edit")
       end
     end
@@ -144,16 +143,15 @@ RSpec.describe StepsController, type: :controller do
   describe "DELETE #destroy" do
     it "destroys the requested step" do
       step = Step.create! valid_attributes
-      expect {
-        delete :destroy, {:id => step.to_param}, valid_session
-      }.to change(Step, :count).by(-1)
+      expect do
+        delete :destroy, { id: step.to_param }, valid_session
+      end.to change(Step, :count).by(-1)
     end
 
     it "redirects to the steps list" do
       step = Step.create! valid_attributes
-      delete :destroy, {:id => step.to_param}, valid_session
+      delete :destroy, { id: step.to_param }, valid_session
       expect(response).to redirect_to(steps_url)
     end
   end
-
 end
