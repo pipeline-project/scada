@@ -17,7 +17,7 @@
 
 <p>
   <strong>Pipeline:</strong>
-  <%= @step.pipeline %>
+  <%= link_to @step.pipeline.name, @step.pipeline %>
 </p>
 
 <%= link_to 'Edit', edit_step_path(@step)  if can? :edit, @step %> |

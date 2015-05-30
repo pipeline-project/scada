@@ -1,4 +1,4 @@
-<%= form_for(@step) do |f| %>
+<%= bootstrap_form_for(@step, class: 'step') do |f| %>
   <% if @step.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@step.errors.count, "error") %> prohibited this step from being saved:</h2>
@@ -11,22 +11,16 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= f.label :name %><br>
-    <%= f.text_field :name %>
+  <%= f.text_field :name %>
+  <%= f.select :type, Step.subclasses.map { |x| [t(x), x] }, { include_blank: 'None' }, wrapper_class: 'step-type' %>
+  <%= f.hidden_field :order, class: 'order' %>
+  <h4>Options</h4>
+  <div class="options">
+    <% f.object.class.stored_attributes[:options].each do |o| %>
+      <%= f.text_field o, layout: :horizontal, data: { option: o } %>
+    <% end %>
   </div>
-  <div class="field">
-    <%= f.label :type %><br>
-    <%= f.text_field :type %>
-  </div>
-  <div class="field">
-    <%= f.label :options %><br>
-    <%= f.text_area :options %>
-  </div>
-  <div class="field">
-    <%= f.label :pipeline_id %><br>
-    <%= f.text_field :pipeline_id %>
-  </div>
+
   <div class="actions">
     <%= f.submit %>
   </div>

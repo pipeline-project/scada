@@ -42,6 +42,8 @@ group :development, :test do
   gem 'spring'
 
   gem 'rspec-rails'
+  gem 'capybara'
+  gem 'factory_girl_rails'
 end
 
 gem 'bootstrap_form'

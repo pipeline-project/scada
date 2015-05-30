@@ -19,6 +19,10 @@ require 'rails_helper'
 # that an instance is receiving a specific message.
 
 RSpec.describe PipelinesController, type: :controller do
+  before do
+    sign_in
+  end
+
   # This should return the minimal set of attributes required to create a valid
   # Pipeline. As you add validations to Pipeline, be sure to
   # adjust the attributes here as well.

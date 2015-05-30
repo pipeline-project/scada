@@ -16,11 +16,7 @@ RSpec.describe "steps/edit", type: :view do
     assert_select "form[action=?][method=?]", step_path(@step), "post" do
       assert_select "input#step_name[name=?]", "step[name]"
 
-      assert_select "input#step_type[name=?]", "step[type]"
-
-      assert_select "textarea#step_options[name=?]", "step[options]"
-
-      assert_select "input#step_pipeline_id[name=?]", "step[pipeline_id]"
+      assert_select "select#step_type[name=?]", "step[type]"
     end
   end
 end

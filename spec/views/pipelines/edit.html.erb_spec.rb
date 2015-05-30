@@ -2,11 +2,9 @@ require 'rails_helper'
 
 RSpec.describe "pipelines/edit", type: :view do
   before(:each) do
-    @pipeline = assign(:pipeline, Pipeline.create!(
-                                    name: "MyString",
-                                    description: "MyText",
-                                    steps: "MyText"
-    ))
+    @pipeline = assign(:pipeline, create(:pipeline))
+
+    allow(view).to receive(:can?).and_return(true)
   end
 
   it "renders the edit pipeline form" do
@@ -16,8 +14,6 @@ RSpec.describe "pipelines/edit", type: :view do
       assert_select "input#pipeline_name[name=?]", "pipeline[name]"
 
       assert_select "textarea#pipeline_description[name=?]", "pipeline[description]"
-
-      assert_select "textarea#pipeline_steps[name=?]", "pipeline[steps]"
     end
   end
 end

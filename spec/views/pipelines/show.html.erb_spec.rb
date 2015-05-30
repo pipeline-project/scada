@@ -2,11 +2,8 @@ require 'rails_helper'
 
 RSpec.describe "pipelines/show", type: :view do
   before(:each) do
-    @pipeline = assign(:pipeline, Pipeline.create!(
-                                    name: "Name",
-                                    description: "MyText",
-                                    steps: "MyText"
-    ))
+    @pipeline = assign(:pipeline, create(:pipeline))
+    allow(view).to receive(:can?).and_return(true)
   end
 
   it "renders attributes in <p>" do

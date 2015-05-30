@@ -19,6 +19,10 @@ require 'rails_helper'
 # that an instance is receiving a specific message.
 
 RSpec.describe StepsController, type: :controller do
+  before do
+    sign_in
+  end
+
   # This should return the minimal set of attributes required to create a valid
   # Step. As you add validations to Step, be sure to
   # adjust the attributes here as well.
