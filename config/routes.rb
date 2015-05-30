@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  devise_for :users
   resources :steps
   resources :steps
   resources :pipelines

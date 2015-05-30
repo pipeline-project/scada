@@ -36,9 +36,15 @@ scratch. This page gets rid of all links and provides the needed markup only.
           <div class="navbar-custom-menu">
             <ul class="nav navbar-nav">
               <!-- Control Sidebar Toggle Button -->
+              <% if user_signed_in? %>      
               <li>
                 <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
               </li>
+              <% else %>
+              <li>
+                <%= link_to "Sign In", new_user_session_path %>
+              </li>
+              <% end %>
             </ul>
           </div>
         </nav>

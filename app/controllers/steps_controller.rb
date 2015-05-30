@@ -1,10 +1,10 @@
 class StepsController < ApplicationController
-  before_action :set_step, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_user!
+  load_and_authorize_resource
 
   # GET /steps
   # GET /steps.json
   def index
-    @steps = Step.all
   end
 
   # GET /steps/1
@@ -14,7 +14,6 @@ class StepsController < ApplicationController
 
   # GET /steps/new
   def new
-    @step = Step.new
   end
 
   # GET /steps/1/edit
@@ -24,8 +23,6 @@ class StepsController < ApplicationController
   # POST /steps
   # POST /steps.json
   def create
-    @step = Step.new(step_params)
-
     respond_to do |format|
       if @step.save
         format.html { redirect_to @step, notice: 'Step was successfully created.' }
@@ -62,11 +59,6 @@ class StepsController < ApplicationController
   end
 
   private
-
-  # Use callbacks to share common setup or constraints between actions.
-  def set_step
-    @step = Step.find(params[:id])
-  end
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def step_params

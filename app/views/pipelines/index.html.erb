@@ -18,9 +18,9 @@
         <td><%= pipeline.name %></td>
         <td><%= pipeline.description %></td>
         <td><%= pipeline.steps %></td>
-        <td><%= link_to 'Show', pipeline %></td>
-        <td><%= link_to 'Edit', edit_pipeline_path(pipeline) %></td>
-        <td><%= link_to 'Destroy', pipeline, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Show', pipeline if can? :read, pipeline %></td>
+        <td><%= link_to 'Edit', edit_pipeline_path(pipeline) if can? :edit, pipeline %></td>
+        <td><%= link_to 'Destroy', pipeline, method: :delete, data: { confirm: 'Are you sure?' } if can? :destroy, pipeline %></td>
       </tr>
     <% end %>
   </tbody>
@@ -28,4 +28,4 @@
 
 <br>
 
-<%= link_to 'New Pipeline', new_pipeline_path %>
+<%= link_to 'New Pipeline', new_pipeline_path if can? :create, Pipeline %>

@@ -15,5 +15,5 @@
   <%= @pipeline.steps %>
 </p>
 
-<%= link_to 'Edit', edit_pipeline_path(@pipeline) %> |
+<%= link_to 'Edit', edit_pipeline_path(@pipeline) if can? :edit, @pipeline %> |
 <%= link_to 'Back', pipelines_path %>
