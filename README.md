@@ -1,28 +1,40 @@
-== README
+# Supervisory Control and Data Acquisition (SCADA) for Data Workflows
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+SCADA allows teams to define robust and repeatable extract-transform-load processes from data sources into data sinks (e.g. a search index). Resources are enriched through declarative tasks that may be distributed, monitored, and inspected through the SCADA interface.
 
-Things you may want to cover:
+Built into the data pipeline are checkpoints to validate data quality and conformance before being released to consumers.
 
-* Ruby version
+## Purpose
 
-* System dependencies
+- Building artisanal data workflows is time consuming and error prone. We want to provide an environment for building consistent workflows with clear data entry and exit points, with clear steps along the way for monitoring data integrity.
 
-* Configuration
+- Data workflows should be sharable and reusable. We want a way to exchange data transformations and enrichments across workflows and organizations.
 
-* Database creation
+- Data workflows should be declarative, and not tightly coupled to particular environments, languages, or architectures. Data workflows should be modular, allowing workflow managers to choose appropriate components for a given pipeline.
 
-* Database initialization
+## Requirements
 
-* How to run the test suite
+- **Ruby**. SCADA requires Ruby 2.0 or greater.
+- **Bundler**. We require a recent version of Bundler. Bundler is typically installed by running `gem install bundler`
+- **Database**. SCADA is a Rails application that requires a database. Any database that works with ActiveRecord should work with this application.
 
-* Services (job queues, cache servers, search engines, etc.)
+## Installation
 
-* Deployment instructions
+Configure environment-specific settings for your application:
 
-* ...
+- `config/database.yml`
+- `config/secrets.yml`
 
+And run these commands to get up and running:
 
-Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.
+```
+$ bundle install
+$ rake db:migrate
+$ rails server
+```
+
+## Testing
+
+```
+$ rspec
+```
