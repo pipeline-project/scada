@@ -19,10 +19,10 @@
 //= require angular
 //= require_tree .
 
-$(document).on("ready page:load", function() {
+$(document).on('ready page:load', function() {
   $('.step').step();
   $('#steps').sortable({
-    handle: ".drag-handle",
+    handle: '.drag-handle',
     onSort: function(evt) {
       $('#steps .step').each(function(index) {
         $(this).find('.order').val(index);
@@ -31,7 +31,7 @@ $(document).on("ready page:load", function() {
   });
 });
 
-$(document).on('nested:fieldAdded', function(event){
+$(document).on('nested:fieldAdded', function(event) {
   var field = event.field;
   if (field.is('.step')) {
     field.step();

@@ -1,17 +1,18 @@
-+function ($) {
+;(function($) {
   'use strict';
 
-  var Step = function (element, options) {
+  var Step = function(element, options) {
     this.$element = $(element);
     this.options = $.extend({}, Step.DEFAULTS, options);
   };
 
   Step.prototype.init = function() {
-    this.init_panel_title();
-    this.init_select_control();
+    this.initPanelTitle();
+    this.initSelectControl();
   };
 
-  Step.prototype.init_panel_title = function() {
+  // Set the panel title
+  Step.prototype.initPanelTitle = function() {
     var $el = this.$element;
     $el.find('.step-name input').on('change', function() {
       $el.find('.panel-title .name').text($(this).val());
@@ -22,36 +23,36 @@
     });
   };
 
-  Step.prototype.init_select_control = function() {
+  // Set the form up for a specifc Step
+  Step.prototype.initSelectControl = function() {
     var $el = this.$element;
-    this.select_control().on('change', function() {
+    this.selectControl().on('change', function() {
       var options = $el.find('.options');
-      var current_options = step_type_options[$(this).val()];
+      var currentOptions = stepTypeOptions[$(this).val()];
       options.find('.form-group').filter(function() {
-        return current_options.indexOf($(this).find('input').data('option')) == -1;
+        return currentOptions.indexOf($(this).find('input').data('option')) == -1;
       }).remove();
 
-      var filtered_options = $.grep(current_options, function(n) {
+      var filteredOptions = $.grep(currentOptions, function(n) {
         return options.has('input[data-option="' + n + '"]').length === 0;
       });
 
       var template = options.find('.form-group')[0].outerHTML;
 
-      $.each(filtered_options, function(i) {
-        options.append(template.replace(/field/ig, filtered_options[i]));
+      $.each(filteredOptions, function(i) {
+        options.append(template.replace(/field/ig, filteredOptions[i]));
       });
     });
   };
 
-  Step.prototype.select_control = function() {
+  Step.prototype.selectControl = function() {
     return this.$element.find('select');
   };
 
   Step.DEFAULTS = { };
 
-  
   function Plugin(option) {
-    return this.each(function () {
+    return this.each(function() {
       var $this   = $(this);
       var data    = $this.data('scada.step');
       var options = typeof option == 'object' && option;
@@ -66,4 +67,4 @@
   $.fn.step = Plugin;
   $.fn.step.Constructor = Step;
 
-}(jQuery);
+}(jQuery));

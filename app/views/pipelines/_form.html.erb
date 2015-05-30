@@ -16,7 +16,7 @@
 
   <h2>Steps</h2>
   <script type="text/javascript">
-    var step_type_options = <%= Hash[Step.subclasses.map { |x| [x, x.stored_attributes[:options]] }].to_json.html_safe %>;
+    var stepTypeOptions = <%= Hash[Step.subclasses.map { |x| [x, x.stored_attributes[:options]] }].to_json.html_safe %>;
   </script>
 
   <ol id="steps" class="row">
