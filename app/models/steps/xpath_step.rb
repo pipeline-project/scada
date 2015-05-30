@@ -2,7 +2,7 @@ module Steps
   class XpathStep < Step
     store_accessor :options, :xpath
 
-    def perform_one(record, params)
+    def perform_one(record, params = {})
       xpaths = params.fetch(:xpath, xpath)
       doc = Nokogiri::XML(record)
 

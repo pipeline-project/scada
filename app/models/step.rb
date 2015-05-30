@@ -28,6 +28,10 @@ class Step < ActiveRecord::Base
     end
   end
 
+  def perform_one(record, params = {})
+    record
+  end
+
   private
 
   def handle_result(record, result)

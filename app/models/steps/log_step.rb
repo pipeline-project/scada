@@ -1,6 +1,6 @@
 module Steps
   class LogStep < Step
-    def perform_one(record, _params)
+    def perform_one(record, _params = {})
       logger.info record
       record
     end

@@ -1,11 +1,9 @@
 module Steps
-  class HttpRequestStep < Step
+  class HttpPostRequestStep < Step
     store_accessor :options, :url
 
-    def perform_one(record, params)
-      return to_enum(:perform_one, record, params) unless block_given?
-
-      http_client.post do |req|
+    def perform_one(record, params = {})
+      http_client.post(url) do |req|
         req.body = record
       end
     end
@@ -13,7 +11,7 @@ module Steps
     private
 
     def http_client
-      @http_client ||= Hurley::Client.new url
+      @http_client ||= Hurley::Client.new
     end
   end
 end

@@ -2,14 +2,14 @@ module Steps
   class HttpRequestStep < Step
     store_accessor :options, :url
 
-    def perform_one(record, params)
+    def perform_one(record, params = {})
       return to_enum(:perform_one, record, params) unless block_given?
 
       uris = [url || record]
       loop do
         uri = uris.pop
 
-        response = http_client(record).get uri
+        response = http_client.get uri
 
         if response.success?
           yield response
@@ -26,9 +26,9 @@ module Steps
       Array.wrap(response.header[:link]).flat_map { |x| LinkHeader.parse(x).links }.select { |x| x.attr_pairs.include? ["rel", "next"] }.map(&:href)
     end
 
-    def http_client(record)
+    def http_client
       @http_client ||= begin
-        c = Hurley::Client.new record
+        c = Hurley::Client.new
         c.request_options.redirection_limit = 10
         c
       end
