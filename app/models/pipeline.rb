@@ -1,5 +1,7 @@
 # A single pipeline
 class Pipeline < ActiveRecord::Base
+  validates :name, presence: true
+
   has_many :steps
   accepts_nested_attributes_for :steps
 
