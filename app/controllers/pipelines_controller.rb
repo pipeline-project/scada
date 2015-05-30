@@ -62,6 +62,6 @@ class PipelinesController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def pipeline_params
-    params.require(:pipeline).permit(:name, :description, steps_attributes: [:name, :type, *Step.all_stored_options])
+    params.require(:pipeline).permit(:name, :description, steps_attributes: [:id, :name, :type, *Step.all_stored_options])
   end
 end
