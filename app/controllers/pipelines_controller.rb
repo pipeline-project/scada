@@ -5,6 +5,7 @@ class PipelinesController < ApplicationController
   # GET /pipelines
   # GET /pipelines.json
   def index
+    @pipelines &&= @pipelines.page(params[:page])
   end
 
   # GET /pipelines/1

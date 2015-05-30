@@ -12,8 +12,13 @@
 
 <p>
   <strong>Steps:</strong>
-  <%= @pipeline.steps %>
+  <ol>
+  <% @pipeline.steps.each do |s| %>
+    <%= render_step(s) %>
+  <% end %>
+  </ol>
 </p>
 
 <%= link_to 'Edit', edit_pipeline_path(@pipeline) if can? :edit, @pipeline %> |
+<%= link_to 'Destroy', @pipeline, method: :delete, data: { confirm: 'Are you sure?' } if can? :destroy, @pipeline %> |
 <%= link_to 'Back', pipelines_path %>
