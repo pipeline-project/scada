@@ -15,11 +15,20 @@
 //= require bootstrap
 //= require AdminLTE.min
 //= require jquery_nested_form
+//= require jquery.fn.sortable
 //= require angular
 //= require_tree .
 
 $(document).on("ready page:load", function() {
   $('.step').step();
+  $('#steps').sortable({
+    handle: ".drag-handle",
+    onSort: function(evt) {
+      $('#steps .step').each(function(index) {
+        $(this).find('.order').val(index);
+      });
+    }
+  });
 });
 
 $(document).on('nested:fieldAdded', function(event){
