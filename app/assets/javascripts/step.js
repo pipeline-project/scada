@@ -7,8 +7,23 @@
   };
 
   Step.prototype.init = function() {
-    var $el = this.$element;
+    this.init_panel_title();
+    this.init_select_control();
+  };
 
+  Step.prototype.init_panel_title = function() {
+    var $el = this.$element;
+    $el.find('.step-name input').on('change', function() {
+      $el.find('.panel-title .name').text($(this).val());
+    });
+
+    $el.find('.step-type select').on('change', function() {
+      $el.find('.panel-title .type').text($(this).val());
+    });
+  };
+
+  Step.prototype.init_select_control = function() {
+    var $el = this.$element;
     this.select_control().on('change', function() {
       var options = $el.find('.options');
       var current_options = step_type_options[$(this).val()];

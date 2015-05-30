@@ -1,12 +1,19 @@
 <li class="step col-md-12">
-  <h3><%= f.object.name %> <small>(<%= f.object.type %>)</small></h3>
-  <%= f.text_field :name %>
-  <%= f.select :type, Step.subclasses.map { |x| [t(x), x] } %>
-  <%= f.text_field :order %>
-  <h4>Options</h4>
-  <div class="options">
-    <% f.object.class.stored_attributes[:options].each do |o| %>
-      <%= f.text_field o, layout: :horizontal, data: { option: o } %>
-    <% end %>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title"><span class="name"><%= f.object.name || 'New Step' %></span> <small>(<span class="type"><%= f.object.type || 'None' %></span>)</small></h3>
+    </div>
+
+    <div class="panel-body">
+      <%= f.text_field :name, placeholder: 'New Step', wrapper_class: 'step-name' %>
+      <%= f.select :type, Step.subclasses.map { |x| [t(x), x] }, { include_blank: 'None' }, wrapper_class: 'step-type' %>
+      <%= f.hidden_field :order %>
+      <h4>Options</h4>
+      <div class="options">
+        <% f.object.class.stored_attributes[:options].each do |o| %>
+          <%= f.text_field o, layout: :horizontal, data: { option: o } %>
+        <% end %>
+      </div>
+    </div>
   </div>
 </li>
