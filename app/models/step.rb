@@ -18,12 +18,16 @@ class Step < ActiveRecord::Base
     case record_or_enumerable
     when Enumerable
       record_or_enumerable.each do |record|
-        result = perform_one(record, params)
+        result = ActiveSupport::Notifications.instrument('step.perform_one', notification_payload) do
+          perform_one(record, params)
+        end
         handle_result(record, result, &block)
       end
     else
       record = record_or_enumerable
-      result = perform_one(record, params)
+      result = ActiveSupport::Notifications.instrument('step.perform_one', notification_payload) do
+        perform_one(record, params)
+      end
       handle_result(record, result, &block)
     end
   end
@@ -33,6 +37,10 @@ class Step < ActiveRecord::Base
   end
 
   private
+
+  def notification_payload
+    @notification_payload ||= { class: self.class, global_id: (to_global_id if persisted?) }
+  end
 
   def handle_result(record, result)
     return to_enum(:handle_result, record, result) unless block_given?
