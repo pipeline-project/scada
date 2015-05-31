@@ -17,6 +17,9 @@
 //= require jquery_nested_form
 //= require jquery.fn.sortable
 //= require angular
+//= require react
+//= require react_ujs
+//= require components
 //= require_tree .
 
 $(document).on('ready page:load', function() {
