@@ -5,4 +5,12 @@ inherit_from:
 AllCops:
   Exclude:
     - "*.gemspec"
+    - "bin/*"
+    - "config/initializers/devise.rb"
     - "db/schema.rb"
+
+Metrics/LineLength:
+  Max: 120
+
+Style/StringLiterals:
+  Enabled: false

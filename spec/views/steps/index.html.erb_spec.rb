@@ -6,7 +6,7 @@ RSpec.describe "steps/index", type: :view do
       create(:step),
       create(:step)
     ])
-    
+
     allow(view).to receive(:can?).and_return(true)
   end
 

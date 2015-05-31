@@ -3,5 +3,4 @@ FactoryGirl.define do
     name "Step Name"
     pipeline
   end
-
 end

@@ -23,7 +23,10 @@ module Steps
     private
 
     def link_rels(response)
-      Array.wrap(response.header[:link]).flat_map { |x| LinkHeader.parse(x).links }.select { |x| x.attr_pairs.include? ["rel", "next"] }.map(&:href)
+      Array.wrap(response.header[:link]).
+        flat_map { |x| LinkHeader.parse(x).links }.
+        select { |x| x.attr_pairs.include? ['rel', 'next'] }.
+        map(&:href)
     end
 
     def http_client

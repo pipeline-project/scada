@@ -32,7 +32,7 @@ class Step < ActiveRecord::Base
     end
   end
 
-  def perform_one(record, params = {})
+  def perform_one(record, _params = {})
     record
   end
 

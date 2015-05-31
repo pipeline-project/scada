@@ -3,5 +3,4 @@ FactoryGirl.define do
     name "Name"
     description "MyText"
   end
-
 end

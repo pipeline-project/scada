@@ -2,7 +2,7 @@ module Steps
   class HttpPostRequestStep < Step
     store_accessor :options, :url
 
-    def perform_one(record, params = {})
+    def perform_one(record, _params = {})
       http_client.post(url) do |req|
         req.body = record
       end
