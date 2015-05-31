@@ -7,8 +7,8 @@ module Steps
     def perform_one(record, _params = {})
       return to_enum(:perform_one, record, _params) unless block_given?
 
-      CSV.parse(record, parse_options) do |row|
-        yield row.to_h
+      CSV.parse(record.payload, parse_options) do |row|
+        yield record.new_child(row.to_h)
       end
     end
 

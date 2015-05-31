@@ -19,13 +19,13 @@ describe Steps::HttpRequestStep do
   end
 
   it "retrieves the content at an address" do
-    expect { |b| http_data_source.perform_one("http://example.com/a", &b) }.to yield_with_args Hurley::Response
+    expect { |b| http_data_source.perform_one(Message.wrap("http://example.com/a"), &b) }.to yield_with_args Message
   end
 
   it "follows link[rel=next] HTTP headers" do
     expect do |b|
-      http_data_source.perform_one("http://example.com/b", &b)
-    end.to yield_successive_args Hurley::Response, Hurley::Response
+      http_data_source.perform_one(Message.wrap("http://example.com/b"), &b)
+    end.to yield_successive_args Message, Message
   end
 
   def http_data_source

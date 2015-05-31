@@ -8,10 +8,10 @@ a,b,c
 2,3,4
     EOF
 
-    data.strip
+    Message.wrap(data.strip)
   end
   it "returns the arguments unchanged" do
-    actual = parse_csv_step.perform_one(data).to_a
+    actual = parse_csv_step.perform_one(data).map(&:payload)
     expect(actual.length).to eq 2
     expect(actual).to include 'a' => '1', 'b' => '2', 'c' => '3'
     expect(actual).to include 'a' => '2', 'b' => '3', 'c' => '4'

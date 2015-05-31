@@ -3,7 +3,11 @@ module Steps
     store_accessor :options, :xpath
 
     def perform_one(record, params = {})
-      Nokogiri::XML(record).xpath(params.fetch(:xpath, xpath)).map(&:to_s)
+      return to_enum(:perform_one, record, params) unless block_given?
+
+      Nokogiri::XML(record.payload).xpath(params.fetch(:xpath, xpath)).each do |x|
+        yield record.new_child(x.to_s)
+      end
     end
   end
 end

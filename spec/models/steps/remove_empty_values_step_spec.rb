@@ -4,22 +4,22 @@ describe Steps::RemoveEmptyValuesStep do
   describe "#enrich_field" do
     let(:record) { { a: ["", "a"], b: "", c: "c", d: [] } }
     it "removes empty elements from an array" do
-      subject.enrich_field(record, :a)
+      subject.enrich_field(Message.wrap(record), :a)
       expect(record[:a]).to match_array ["a"]
     end
 
     it "removes empty arrays" do
-      subject.enrich_field(record, :d)
+      subject.enrich_field(Message.wrap(record), :d)
       expect(record).not_to have_key :d
     end
 
     it "removes empty strings" do
-      subject.enrich_field(record, :b)
+      subject.enrich_field(Message.wrap(record), :b)
       expect(record).not_to have_key :b
     end
 
     it "passes through other values unchanged" do
-      subject.enrich_field(record, :c)
+      subject.enrich_field(Message.wrap(record), :c)
       expect(record[:c]).to eq "c"
     end
   end

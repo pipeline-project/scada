@@ -5,7 +5,7 @@ describe Steps::ConstantValueStep do
     subject { described_class.new value: "a" }
     let(:record) { {} }
     it "sets a field to a constant value" do
-      subject.enrich_field(record, :a)
+      subject.enrich_field(Message.wrap(record), :a)
       expect(record[:a]).to eq "a"
     end
   end

@@ -5,14 +5,14 @@ module Steps
     def perform_one(record, params = {})
       return to_enum(:perform_one, record, params) unless block_given?
 
-      uris = [url || record]
+      uris = [url || record.payload]
       loop do
         uri = uris.pop
 
         response = http_client.get uri
 
         if response.success?
-          yield response
+          yield record.new_child(response)
           uris += link_rels(response)
         end
 

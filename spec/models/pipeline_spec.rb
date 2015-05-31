@@ -5,14 +5,14 @@ describe Pipeline do
     subject.steps << Steps::IdentityStep.new(pipeline: subject)
     subject.steps << Steps::IdentityStep.new(pipeline: subject)
 
-    actual = subject.perform([1, 2, 3]).to_a
+    actual = subject.perform([1, 2, 3]).map(&:payload)
     expect(actual).to match_array [1, 2, 3]
   end
 
   it 'should kinda work with enumerables' do
     subject.steps << Steps::ListDirectoryPatternStep.new(pipeline: subject, glob: File.join(Rails.root, '*'))
 
-    actual = subject.perform.to_a
+    actual = subject.perform.map(&:payload)
     expect(actual).to include File.join(Rails.root, 'Gemfile')
     expect(actual).to include File.join(Rails.root, 'Rakefile')
   end
@@ -31,9 +31,10 @@ describe Pipeline do
                                           })
     subject.steps << Steps::GsubStep.new(pipeline: subject, pattern: 'druid:', replacement: '', fields: 'id')
     subject.steps << Steps::ConstantValueStep.new(pipeline: subject, value: ->() { Time.now }, fields: 'pipelined_at')
-    # subject.steps << Steps::HttpPostRequestStep.new(subject, url: 'http://localhost:8983/solr/update')
+    # subject.steps << Steps::HttpPostRequestStep.new(pipeline: subject, url: 'http://localhost:8983/solr/update')
 
-    actual = subject.perform(['xf680rd3068']).first
+    actual = subject.perform(['xf680rd3068']).first.payload
+    expect(actual).not_to be_blank
     expect(actual).to include 'id' => ['xf680rd3068'],
                               'sourceId' => ['MISC_1855'],
                               'label' => ['Latin glossary : small manuscript fragment on vellum.']

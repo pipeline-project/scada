@@ -1,7 +1,8 @@
 module Steps
   class ReadFileStep < Step
     def perform_one(record, _params = {})
-      File.read(record)
+      record.payload = File.read(record.payload)
+      record
     end
   end
 end

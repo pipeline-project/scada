@@ -9,23 +9,23 @@ module Steps
         Array.wrap(target_fields).each do |field|
           enrich_field record, field
         end
-
-        record
       else
-        enrich_value(record, nil, record)
+        record.payload = enrich_value(record, nil, record.payload)
       end
+
+      record
     end
 
     def enrich_field(record, field)
-      if record[field].is_a? Array
-        record[field] = record[field].map { |v| enrich_value(record, field, v) }.compact
+      if record.payload[field].is_a? Array
+        record.payload[field] = record.payload[field].map { |v| enrich_value(record, field, v) }.compact
       else
-        record[field] = enrich_value(record, field, record[field])
+        record.payload[field] = enrich_value(record, field, record.payload[field])
       end
 
-      record.delete(field) if record[field].blank?
+      record.payload.delete(field) if record.payload[field].blank?
 
-      record[field]
+      record.payload[field]
     end
 
     def enrich_value(_record, _field, value)

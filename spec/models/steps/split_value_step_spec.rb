@@ -5,7 +5,7 @@ describe Steps::SplitValueStep do
     subject { described_class.new pattern: ',' }
     let(:record) { { a: 'a,b,c' } }
     it "splits the value of a field by a delimiter" do
-      subject.enrich_field(record, :a)
+      subject.enrich_field(Message.wrap(record), :a)
       expect(record[:a]).to match_array ['a', 'b', 'c']
     end
   end

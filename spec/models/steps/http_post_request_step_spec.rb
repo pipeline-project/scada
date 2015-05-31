@@ -12,7 +12,7 @@ describe Steps::HttpPostRequestStep do
   end
 
   it "posts the record to the url" do
-    expect(http_data_source.perform_one("x")).to be_success
+    expect(http_data_source.perform_one(Message.wrap("x")).payload).to be_success
   end
 
   def http_data_source

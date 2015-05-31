@@ -16,32 +16,32 @@ class Step < ActiveRecord::Base
 
   ##
   # Execute the step on a given set of records
-  def perform(record_or_enumerable = nil, params = {}, &block)
-    logger.debug "#{self}(#{params.inspect}) <- #{record_or_enumerable}"
-    return to_enum(:perform, record_or_enumerable, params) unless block_given?
+  def perform(messages = nil, params = {}, &block)
+    logger.debug "#{self}(#{params.inspect}) <- #{messages}"
+    return to_enum(:perform, messages, params) unless block_given?
 
-    case record_or_enumerable
-    when Enumerable
-      record_or_enumerable.each do |record|
-        result = run_callbacks :perform do
-          perform_one(record, params)
-        end
-        handle_result(record, result, &block)
+    wrap_input(messages).each do |m|
+      run_callbacks :perform do
+        logger.debug "#{object_id} -> #{m}"
+        result = perform_one(m, params)
+        handle_result(m, result, &block)
       end
-    else
-      record = record_or_enumerable
-      result = run_callbacks :perform do
-        perform_one(record, params)
-      end
-      handle_result(record, result, &block)
     end
   end
 
-  def perform_one(record, _params = {})
-    record
+  def perform_one(message, _params = {})
+    message
   end
 
   private
+
+  def wrap_input(messages)
+    if messages.respond_to? :each
+      messages
+    else
+      Array.wrap(messages)
+    end
+  end
 
   def perform_with_instrumentation(block)
     ActiveSupport::Notifications.instrument('step.perform_one', notification_payload) do
@@ -59,14 +59,14 @@ class Step < ActiveRecord::Base
     handle_exception(e)
   end
 
-  def handle_result(record, result)
+  def handle_result(message, result)
     return unless result
-    return to_enum(:handle_result, record, result) unless block_given?
+    return to_enum(:handle_result, message, result) unless block_given?
 
     if result.is_a?(Enumerable) && !result.is_a?(Hash)
-      result.each { |r| yield wrap(record, r) }
+      result.each { |r| yield wrap(message, r) }
     else
-      yield wrap(record, result)
+      yield wrap(message, result)
     end
   end
 
@@ -74,16 +74,18 @@ class Step < ActiveRecord::Base
     logger.warn e
   end
 
-  def wrap(record, result)
+  def wrap(message, result)
     if field?
-      if record.is_a? Hash
-        record[field] = result
+      if message.payload.is_a? Hash
+        message.payload[field] = result
       else
-        { field => result }
+        message.payload = { field => result }
       end
+
+      message
     else
       result
-    end.tap { |r| logger.debug "#{self} #{record} => #{r.inspect}" }
+    end.tap { |r| logger.debug "#{self} #{message} => #{r.inspect}" }
   end
 
   def field?
@@ -91,6 +93,6 @@ class Step < ActiveRecord::Base
   end
 
   def logger
-    @logger ||= Logger.new(STDERR).tap { |l| l.level = Logger::WARN }
+    @logger ||= Logger.new(STDERR).tap { |l| l.level = Logger::INFO }
   end
 end

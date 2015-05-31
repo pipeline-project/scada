@@ -10,14 +10,14 @@ module Steps
                 filter_field record, field
               end
             else
-              filter_value(record, nil, record)
+              filter_value(record, nil, record.payload)
             end
 
       record if res
     end
 
     def filter_field(record, field)
-      Array.wrap(record[field]).any? { |v| filter_value(record, field, v) }
+      Array.wrap(record.payload[field]).any? { |v| filter_value(record, field, v) }
     end
 
     def filter_value(_record, _field, value)
