@@ -11,7 +11,7 @@ class Step < ActiveRecord::Base
 
   ##
   # Execute the step on a given set of records
-  def perform(record_or_enumerable, params = {}, &block)
+  def perform(record_or_enumerable = nil, params = {}, &block)
     logger.debug "#{self}(#{params.inspect}) <- #{record_or_enumerable}"
     return to_enum(:perform, record_or_enumerable, params) unless block_given?
 

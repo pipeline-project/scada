@@ -5,7 +5,7 @@ class Pipeline < ActiveRecord::Base
   has_many :steps
   accepts_nested_attributes_for :steps
 
-  def perform(seed)
+  def perform(seed = nil)
     return to_enum(:perform, seed) unless block_given?
 
     results = steps.inject(seed) do |memo, step|

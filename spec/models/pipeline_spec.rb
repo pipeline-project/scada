@@ -10,9 +10,9 @@ describe Pipeline do
   end
 
   it 'should kinda work with enumerables' do
-    subject.steps << Steps::ListDirectoryPatternStep.new(pipeline: subject)
+    subject.steps << Steps::ListDirectoryPatternStep.new(pipeline: subject, glob: File.join(Rails.root, '*'))
 
-    actual = subject.perform(File.join(Rails.root, '*')).to_a
+    actual = subject.perform.to_a
     expect(actual).to include File.join(Rails.root, 'Gemfile')
     expect(actual).to include File.join(Rails.root, 'Rakefile')
   end
