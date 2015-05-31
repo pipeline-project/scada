@@ -5,6 +5,11 @@ class Step < ActiveRecord::Base
 
   store :options, accessors: [:field], coder: JSON
 
+  define_callbacks :perform
+
+  set_callback :perform, :around, ->(_, block) { perform_with_instrumentation(block) }
+  set_callback :perform, :around, ->(_, block) { perform_with_error_handling(block) }
+
   def self.all_stored_options
     Step.subclasses.map { |x| x.stored_attributes[:options] }.flatten.uniq
   end
@@ -18,14 +23,14 @@ class Step < ActiveRecord::Base
     case record_or_enumerable
     when Enumerable
       record_or_enumerable.each do |record|
-        result = ActiveSupport::Notifications.instrument('step.perform_one', notification_payload) do
+        result = run_callbacks :perform do
           perform_one(record, params)
         end
         handle_result(record, result, &block)
       end
     else
       record = record_or_enumerable
-      result = ActiveSupport::Notifications.instrument('step.perform_one', notification_payload) do
+      result = run_callbacks :perform do
         perform_one(record, params)
       end
       handle_result(record, result, &block)
@@ -38,11 +43,24 @@ class Step < ActiveRecord::Base
 
   private
 
+  def perform_with_instrumentation(block)
+    ActiveSupport::Notifications.instrument('step.perform_one', notification_payload) do
+      block.call
+    end
+  end
+
   def notification_payload
     @notification_payload ||= { class: self.class, global_id: (to_global_id if persisted?) }
   end
 
+  def perform_with_error_handling(block)
+    block.call
+  rescue => e
+    handle_exception(e)
+  end
+
   def handle_result(record, result)
+    return unless result
     return to_enum(:handle_result, record, result) unless block_given?
 
     if result.is_a?(Enumerable) && !result.is_a?(Hash)
@@ -50,6 +68,10 @@ class Step < ActiveRecord::Base
     else
       yield wrap(record, result)
     end
+  end
+
+  def handle_exception(e)
+    logger.warn e
   end
 
   def wrap(record, result)
@@ -69,6 +91,6 @@ class Step < ActiveRecord::Base
   end
 
   def logger
-    @logger ||= Logger.new('/dev/null')
+    @logger ||= Logger.new(STDERR).tap { |l| l.level = Logger::WARN }
   end
 end
