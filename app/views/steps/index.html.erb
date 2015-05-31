@@ -31,3 +31,5 @@
 <br>
 
 <%= link_to 'New Step', new_step_path if can? :create, Step%>
+
+<%= react_component 'Steps', { data: @steps } %>
