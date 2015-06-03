@@ -5,7 +5,7 @@ module Steps
     def perform_one(record, params = {})
       return to_enum(:perform_one, record, params) unless block_given?
 
-      result = traverse(record.payload, params.fetch(:level, level))
+      result = traverse(record.payload, render(record, params.fetch(:level, level)))
 
       if result.respond_to? :each
         result.each do |r|

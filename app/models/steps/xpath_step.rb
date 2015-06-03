@@ -8,7 +8,7 @@ module Steps
 
       record.payload = xpaths.each_with_object({}) do |(key, xpath), h|
         h[key.to_s] ||= []
-        h[key.to_s] += doc.xpath(xpath).map(&:to_s)
+        h[key.to_s] += doc.xpath(render(record, xpath)).map(&:to_s)
       end
 
       record

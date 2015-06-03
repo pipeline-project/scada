@@ -5,7 +5,7 @@ module Steps
     def perform_one(record, params = {})
       return to_enum(:perform_one, record, params) unless block_given?
 
-      uris = [url || record.payload]
+      uris = [render(record, url) || record.payload]
       loop do
         uri = uris.pop
 

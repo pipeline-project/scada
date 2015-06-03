@@ -95,4 +95,12 @@ class Step < ActiveRecord::Base
   def logger
     @logger ||= Logger.new(STDERR).tap { |l| l.level = Logger::INFO }
   end
+
+  def render(record, value)
+    if value.present? && value.is_a?(String)
+      Mustache.render(value, record.payload)
+    else
+      value
+    end
+  end
 end

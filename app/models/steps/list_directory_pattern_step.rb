@@ -17,7 +17,7 @@ module Steps
     def perform_one(record, params = {})
       return to_enum(:perform_one, record, params) unless block_given?
 
-      Dir.glob(record.payload) do |d|
+      Dir.glob(render(record, record.payload)) do |d|
         yield record.new_child(d)
       end
     end

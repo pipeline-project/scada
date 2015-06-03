@@ -3,7 +3,7 @@ module Steps
     store_accessor :options, :url
 
     def perform_one(record, _params = {})
-      record.payload = http_client.post(url) do |req|
+      record.payload = http_client.post(render(record, url)) do |req|
         req.body = record.payload
       end
 

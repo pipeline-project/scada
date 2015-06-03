@@ -3,11 +3,11 @@ module Steps
     store_accessor :options, :value
 
     def enrich_field(record, field)
-      record.payload[field] = value
+      record.payload[field] = render(record, value)
     end
 
-    def enrich_value(_record, _field, _value)
-      value
+    def enrich_value(record, _field, _old_value)
+      render(record, value)
     end
 
     def value
