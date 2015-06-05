@@ -13,21 +13,21 @@ module Steps
 
         if response.success?
           yield record.new_child(response)
-          uris += link_rels(response)
+          uris += next_documents(response)
         end
 
         break if uris.empty?
       end
     end
 
-    private
-
-    def link_rels(response)
+    def next_documents(response)
       Array.wrap(response.header[:link]).
         flat_map { |x| LinkHeader.parse(x).links }.
         select { |x| x.attr_pairs.include? ['rel', 'next'] }.
         map(&:href)
     end
+
+    private
 
     def http_client
       @http_client ||= begin
