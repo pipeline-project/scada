@@ -22,6 +22,7 @@ ActiveRecord::Schema.define(version: 20150605000955) do
     t.datetime "updated_at", null: false
   end
 
+  add_index "blobs", ["step_id", "unique_id"], name: "index_blobs_on_step_id_and_unique_id", unique: true
   add_index "blobs", ["step_id"], name: "index_blobs_on_step_id"
   add_index "blobs", ["tag"], name: "index_blobs_on_tag"
 

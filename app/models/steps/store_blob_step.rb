@@ -5,16 +5,15 @@ module Steps
     store_accessor :options, :tag, :unique_id_field
 
     def perform_one(record, _params = {})
-      b = Blob.find_or_initialize_by(unique_id: unique_id(record))
+      b = Blob.find_or_initialize_by(step: self, unique_id: unique_id(record))
       b.data = record.payload
       b.tag = render(record, tag)
-      b.step = self
       b.save!
 
       record
     end
 
-    private
+    protected
 
     def unique_id(record)
       field = render(record, unique_id_field)

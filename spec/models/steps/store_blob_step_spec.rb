@@ -20,6 +20,10 @@ describe Steps::StoreBlobStep do
     expect(Blob.last.tag).to eq 'tag'
   end
 
+  it 'yields the current record' do
+    expect(store_blob_step.perform_one(message)).to eq message
+  end
+
   def store_blob_step(unique_id_field = 'id', tag = 'tag')
     described_class.new unique_id_field: unique_id_field, tag: tag
   end
