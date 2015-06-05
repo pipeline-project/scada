@@ -11,7 +11,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150530160804) do
+ActiveRecord::Schema.define(version: 20150605000955) do
+
+  create_table "blobs", force: :cascade do |t|
+    t.string   "unique_id"
+    t.binary   "data"
+    t.integer  "step_id"
+    t.string   "tag"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "blobs", ["step_id"], name: "index_blobs_on_step_id"
+  add_index "blobs", ["tag"], name: "index_blobs_on_tag"
 
   create_table "pipelines", force: :cascade do |t|
     t.string   "name"
