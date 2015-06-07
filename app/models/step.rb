@@ -33,6 +33,10 @@ class Step < ActiveRecord::Base
     message
   end
 
+  def >>(other)
+    other
+  end
+
   private
 
   def wrap_input(messages)

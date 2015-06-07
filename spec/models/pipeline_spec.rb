@@ -40,4 +40,15 @@ describe Pipeline do
                               'label' => ['Latin glossary : small manuscript fragment on vellum.']
     expect(actual).to include 'pipelined_at'
   end
+
+  it 'is expressed succintly' do
+    actual = (subject.define do
+      gsub(pattern: '^(.+)$', replacement: 'http://purl.stanford.edu/\1.xml') >>
+        http_request >>
+        item_level(level: 'body') >>
+        item_level_xpath(xpath: '//identityMetadata')
+    end).perform(['xf680rd3068']).first.payload
+
+    expect(actual).to include '<identityMetadata>'
+  end
 end

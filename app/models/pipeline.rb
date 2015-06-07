@@ -17,6 +17,29 @@ class Pipeline < ActiveRecord::Base
     end
   end
 
+  def define(&block)
+    self.steps = StepDSL.new(&block).steps
+    self
+  end
+
+  class StepDSL
+    attr_reader :steps
+    def initialize(&block)
+      @steps = []
+      @aliases ||= {}
+
+      instance_eval(&block) if block_given?
+    end
+
+    def block(short)
+      @aliases[short] ||= "Steps::#{short.to_s.camelize}Step".constantize
+    end
+
+    def method_missing(m, *args)
+      block(m).new(*args).tap { |b| @steps << b }
+    end
+  end
+
   private
 
   def wrap_seed(record_or_enumerable)
