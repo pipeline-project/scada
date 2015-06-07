@@ -2,7 +2,11 @@ Rails.application.routes.draw do
   devise_for :users
   resources :steps
   resources :steps
-  resources :pipelines
+  resources :pipelines do
+    member do
+      match 'process', to: 'jobs#stream', via: [:get, :post]
+    end
+  end
   root 'welcome#index'
 
   # The priority is based upon order of creation: first created -> highest priority.
