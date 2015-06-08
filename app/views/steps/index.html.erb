@@ -20,9 +20,9 @@
         <td><%= step.type %></td>
         <td><%= step.options %></td>
         <td><%= step.pipeline %></td>
-        <td><%= link_to 'Show', step if can? :read, step %></td>
+        <td><%= link_to 'Show', step_path(step) if can? :read, step %></td>
         <td><%= link_to 'Edit', edit_step_path(step) if can? :edit, step  %></td>
-        <td><%= link_to 'Destroy', step, method: :delete, data: { confirm: 'Are you sure?' } if can? :destroy, step  %></td>
+        <td><%= link_to 'Destroy', step_path(step), method: :delete, data: { confirm: 'Are you sure?' } if can? :destroy, step  %></td>
       </tr>
     <% end %>
   </tbody>
